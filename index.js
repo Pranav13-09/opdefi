@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended : true}))
 
 
 app.get('/', (req, res) => {
-  res.send('Hello, Express with TypeScript!');
+  res.send('Hello,Its working!');
 });
 
 app.listen(port, () => {
