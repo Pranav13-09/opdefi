@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model Passenger {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  firstName  String
+  lastName   String
+  passportNumber String @unique
+  flight   Flight[]  @relation(fields: [flightIds], references: [id])
+  flightIds String[] @db.ObjectId
+  assignment Assignment[]
+}
+ 
+
+
+model Flight {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  flightNumber String
+  departure   String
+  destination String
+  departureTime DateTime
+  destinationTime DateTime
+  availableSeats Int
+  passenger Passenger[] @relation(fields :[passengerIds],references: [id])
+  passengerIds String[] @db.ObjectId
+  assignment Assignment[]
+  
+}
+
+
+model Assignment {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  passenger Passenger @relation(fields: [passengerId], references: [id])
+  flight    Flight    @relation(fields: [flightId], references: [id])
+  passengerId String @db.ObjectId
+  flightId    String @db.ObjectId
+  assignedAt DateTime @default(now())
+}
+
+
+
+
+
+
