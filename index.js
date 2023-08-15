@@ -4,7 +4,7 @@ const FlightRouter = require("./routes/flightroutes")
 const AssignmentRouter = require("./routes/assignmentroutes")
 
 const app = express();
-const port = 3000;
+const port = process.env.port || 3000;
 
 
 
